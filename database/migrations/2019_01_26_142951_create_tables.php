@@ -13,9 +13,11 @@ class CreateTables extends Migration
      */
     public function up()
     {
-        Schema::create('tables', function (Blueprint $table) {
-            $table->increments('id');
-            $table->timestamps();
+        Schema::create('currency', function (Blueprint $table) {
+            $table->char('currency_code', 3);
+            $table->primary('currency_code');
+            $table->string('currency_name', 30);
+            $table->float('cash_limit', 25, 5);
         });
     }
 
@@ -26,6 +28,6 @@ class CreateTables extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tables');
+        Schema::dropIfExists('currency');
     }
 }
