@@ -27,7 +27,7 @@ class CreateTables extends Migration
 
         Schema::create('operation', function (Blueprint $table) {
             $table->increments('operation_id');
-            $table->integer('exchange_office');
+            $table->unsignedInteger('exchange_office');
             $table->foreign('exchange_office')->references('office_id')->on('exchange_office');
             $table->dateTime('datetime');
         });
@@ -65,23 +65,23 @@ class CreateTables extends Migration
             $table->foreign('target_currency_code')->references('currency_code')->on('currency');
             $table->float('exchange_rate', 25,5);
             $table->date('date');
-            $table->integer('office_id');
+            $table->unsignedInteger('office_id');
 
             $table->foreign('office_id')->references('office_id')->on('exchange_office');
             $table->foreign('exchange_rate_id')->references('exchange_rate_central_bank_id')->on('exchange_rate_central_bank');
         });
 
         Schema::create('banknotes_outflux', function (Blueprint $table) {
-            $table->integer('operation_id');
-            $table->integer('banknote_id');
+            $table->unsignedInteger('operation_id');
+            $table->unsignedInteger('banknote_id');
             $table->foreign('operation_id')->references('operation_id')->on('operation');
             $table->foreign('banknote_id')->references('banknote_id')->on('banknote');
             $table->primary(['operation_id', 'banknote_id']);
         });
 
         Schema::create('banknotes_influx', function (Blueprint $table) {
-            $table->integer('operation_id');
-            $table->integer('banknote_id');
+            $table->unsignedInteger('operation_id');
+            $table->unsignedInteger('banknote_id');
             $table->foreign('operation_id')->references('operation_id')->on('operation');
             $table->foreign('banknote_id')->references('banknote_id')->on('banknote');
             $table->primary(['operation_id', 'banknote_id']);
@@ -96,14 +96,14 @@ class CreateTables extends Migration
             $table->increments('car_id');
             $table->string('car_model', 30);
             $table->string('car_model', 15);
-            $table->integer('company_id');
+            $table->unsignedInteger('company_id');
             $table->foreign('company_id')->references('company_id')->on('cash_in_transit_company');
         });
                 
         Schema::create('operation_cash_in_transit', function (Blueprint $table) {
-            $table->integer('operation_id');
+            $table->unsignedInteger('operation_id');
             $table->primary('operation_id');
-            $table->integer('car_id');
+            $table->unsignedInteger('car_id');
             $table->foreign('operation_id')->references('operation_id')->on('operation');
             $table->foreign('car_id')->references('car_id')->on('cash_in_transit_car');
         });
@@ -113,7 +113,7 @@ class CreateTables extends Migration
             $table->string('first_name', 30);
             $table->string('last_name', 30);
             $table->date('date_of_birth');
-            $table->integer('exchange_office_id');
+            $table->unsignedInteger('exchange_office_id');
             $table->foreign('exchange_office_id')->references('office_id')->on('exchange_office');
         });
         Schema::create('customer', function (Blueprint $table) {
@@ -124,9 +124,9 @@ class CreateTables extends Migration
             $table->date('date_of_birth');
         });
         Schema::create('operation_exchange', function (Blueprint $table) {
-            $table->integer('operation_id');
+            $table->unsignedInteger('operation_id');
             $table->primary('operation_id');
-            $table->integer('exchange_rate_id');
+            $table->unsignedInteger('exchange_rate_id');
             $table->string('customer_passport_number');
             $table->foreign('operation_id')->references('operation_id')->on('operation');
             $table->foreign('exchange_rate_id')->references('exchange_rate_id')->on('exchange_rate');
@@ -134,7 +134,7 @@ class CreateTables extends Migration
         });
 
         Schema::create('base_currency', function (Blueprint $table) {
-            $table->integer('exchange_office_id');
+            $table->unsignedInteger('exchange_office_id');
             $table->primary('exchange_office_id');
             $table->foreign('exchange_office_id')->references('office_id')->on('exchange_office');
             $table->char('base_currency_code', 3);
