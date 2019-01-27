@@ -99,7 +99,6 @@ class CreateTables extends Migration
             $table->integer('company_id');
             $table->foreign('company_id')->references('company_id')->on('cash_in_transit_company');
         });
-
                 
         Schema::create('operation_cash_in_transit', function (Blueprint $table) {
             $table->integer('operation_id');
@@ -133,6 +132,14 @@ class CreateTables extends Migration
             $table->foreign('exchange_rate_id')->references('exchange_rate_id')->on('exchange_rate');
             $table->foreign('customer_passport_number')->references('passport_number')->on('customer');
         });
+
+        Schema::create('base_currency', function (Blueprint $table) {
+            $table->integer('exchange_office_id');
+            $table->primary('exchange_office_id');
+            $table->foreign('exchange_office_id')->references('office_id')->on('exchange_office');
+            $table->char('base_currency_code', 3);
+            $table->foreign('base_currency_code')->references('currency_code')->on('currency');
+        });
     }
 
     /**
@@ -142,6 +149,21 @@ class CreateTables extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('base_currency');
+        Schema::dropIfExists('operation_exchange');
+        Schema::dropIfExists('customer');
+        Schema::dropIfExists('employee');
+        Schema::dropIfExists('operation_cash_in_transit');
+        Schema::dropIfExists('cash_in_transit_car');
+        Schema::dropIfExists('cash_in_transit_company');
+        Schema::dropIfExists('banknotes_influx');
+        Schema::dropIfExists('banknotes_outflux');
+        Schema::dropIfExists('exchange_rate');
+        Schema::dropIfExists('exchange_rate_central_bank');
+        Schema::dropIfExists('valid_nominal_value');
+        Schema::dropIfExists('banknote');
+        Schema::dropIfExists('operation');
+        Schema::dropIfExists('exchange_office');
         Schema::dropIfExists('currency');
     }
 }
