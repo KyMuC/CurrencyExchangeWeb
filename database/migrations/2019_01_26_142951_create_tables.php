@@ -19,6 +19,17 @@ class CreateTables extends Migration
             $table->string('currency_name', 30);
             $table->float('cash_limit', 25, 5);
         });
+
+        Schema::create('exchange_office', function (Blueprint $table) {
+            $table->increments('office_id');
+            $table->string('adress', 100);
+        });
+
+        Schema::create('operation', function (Blueprint $table) {
+            $table->increments('operation_id');
+            $table->foreign('exchange_office')->references('office_id')->on('exchange_office');
+            $table->dateTime('datetime');
+        });
     }
 
     /**
