@@ -95,7 +95,7 @@ class CreateTables extends Migration
         Schema::create('cash_in_transit_car', function (Blueprint $table) {
             $table->increments('car_id');
             $table->string('car_model', 30);
-            $table->string('car_number', 15);
+            $table->string('car_model', 15);
             $table->unsignedInteger('company_id');
             $table->foreign('company_id')->references('company_id')->on('cash_in_transit_company');
         });
@@ -127,7 +127,7 @@ class CreateTables extends Migration
             $table->unsignedInteger('operation_id');
             $table->primary('operation_id');
             $table->unsignedInteger('exchange_rate_id');
-            $table->string('customer_passport_number');
+            $table->string('customer_passport_number', 20);
             $table->foreign('operation_id')->references('operation_id')->on('operation');
             $table->foreign('exchange_rate_id')->references('exchange_rate_id')->on('exchange_rate');
             $table->foreign('customer_passport_number')->references('passport_number')->on('customer');
