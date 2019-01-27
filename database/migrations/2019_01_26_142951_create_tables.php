@@ -71,7 +71,7 @@ class CreateTables extends Migration
             $table->foreign('exchange_rate_id')->references('exchange_rate_central_bank_id')->on('exchange_rate_central_bank');
         });
 
-        Schema::create('Banknotes_outflux', function (Blueprint $table) {
+        Schema::create('banknotes_outflux', function (Blueprint $table) {
             $table->integer('operation_id');
             $table->integer('banknote_id');
             $table->foreign('operation_id')->references('operation_id')->on('operation');
@@ -79,12 +79,25 @@ class CreateTables extends Migration
             $table->primary(['operation_id', 'banknote_id']);
         });
 
-        Schema::create('Banknotes_influx', function (Blueprint $table) {
+        Schema::create('banknotes_influx', function (Blueprint $table) {
             $table->integer('operation_id');
             $table->integer('banknote_id');
             $table->foreign('operation_id')->references('operation_id')->on('operation');
             $table->foreign('banknote_id')->references('banknote_id')->on('banknote');
             $table->primary(['operation_id', 'banknote_id']);
+        });
+
+        Schema::create('cash_in_transit_company', function (Blueprint $table) {
+            $table->increments('company_id');
+            $table->string('company_name', 30);
+        });
+
+        Schema::create('cash_in_transit_car', function (Blueprint $table) {
+            $table->increments('car_id');
+            $table->string('car_model', 30);
+            $table->string('car_model', 15);
+            $table->integer('company_id');
+            $table->foreign('company_id')->references('company_id')->on('cash_in_transit_company');
         });
         
 
