@@ -46,6 +46,31 @@ class CreateTables extends Migration
             $table->foreign('currency_code')->references('currency_code')->on('currency');
             $table->float('valid_nominal_value', 25, 5);
         });
+
+        Schema::create('exchange_rate_central_bank', function (Blueprint $table) {
+            $table->increments('exchange_rate_central_bank_id');
+            $table->char('source_currency_code', 3);
+            $table->char('target_currency_code', 3);
+            $table->foreign('source_currency_code')->references('currency_code')->on('currency');
+            $table->foreign('target_currency_code')->references('currency_code')->on('currency');
+            $table->float('exchange_rate', 25,5);
+            $table->date('date');
+        });
+
+        Schema::create('exchange_rate', function (Blueprint $table) {
+            $table->increments('exchange_rate_id');
+            $table->char('source_currency_code', 3);
+            $table->char('target_currency_code', 3);
+            $table->foreign('source_currency_code')->references('currency_code')->on('currency');
+            $table->foreign('target_currency_code')->references('currency_code')->on('currency');
+            $table->float('exchange_rate', 25,5);
+            $table->date('date');
+            $table->integer('office_id');
+
+            $table->foreign('office_id')->references('office_id')->on('exchange_office');
+            $table->foreign('exchange_rate_id')->references('exchange_rate_central_bank_id')->on('exchange_rate_central_bank');
+        });
+
     }
 
     /**
