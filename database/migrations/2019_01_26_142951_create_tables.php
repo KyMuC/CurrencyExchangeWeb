@@ -95,7 +95,7 @@ class CreateTables extends Migration
         Schema::create('cash_in_transit_car', function (Blueprint $table) {
             $table->increments('car_id');
             $table->string('car_model', 30);
-            $table->string('car_model', 15);
+            $table->string('car_number', 15);
             $table->unsignedInteger('company_id');
             $table->foreign('company_id')->references('company_id')->on('cash_in_transit_company');
         });
