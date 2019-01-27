@@ -27,8 +27,24 @@ class CreateTables extends Migration
 
         Schema::create('operation', function (Blueprint $table) {
             $table->increments('operation_id');
+            $table->integer('exchange_office');
             $table->foreign('exchange_office')->references('office_id')->on('exchange_office');
             $table->dateTime('datetime');
+        });
+
+        Schema::create('banknote', function (Blueprint $table) {
+            $table->increments('banknote_id');
+            $table->char('currency_code', 3);
+            $table->foreign('currency_code')->references('currency_code')->on('currency');
+            $table->float('nominal_value', 25, 5);
+        });
+
+
+        Schema::create('valid_nominal_value', function (Blueprint $table) {
+            $table->increments('id');
+            $table->char('currency_code', 3);
+            $table->foreign('currency_code')->references('currency_code')->on('currency');
+            $table->float('valid_nominal_value', 25, 5);
         });
     }
 
