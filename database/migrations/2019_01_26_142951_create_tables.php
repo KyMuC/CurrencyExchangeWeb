@@ -99,6 +99,40 @@ class CreateTables extends Migration
             $table->integer('company_id');
             $table->foreign('company_id')->references('company_id')->on('cash_in_transit_company');
         });
+
+                
+        Schema::create('operation_cash_in_transit', function (Blueprint $table) {
+            $table->integer('operation_id');
+            $table->primary('operation_id');
+            $table->integer('car_id');
+            $table->foreign('operation_id')->references('operation_id')->on('operation');
+            $table->foreign('car_id')->references('car_id')->on('cash_in_transit_car');
+        });
+        Schema::create('employee', function (Blueprint $table) {
+            $table->string('passport_number', 20);
+            $table->primary('passport_number');
+            $table->string('first_name', 30);
+            $table->string('last_name', 30);
+            $table->date('date_of_birth');
+            $table->integer('exchange_office_id');
+            $table->foreign('exchange_office_id')->references('office_id')->on('exchange_office');
+        });
+        Schema::create('customer', function (Blueprint $table) {
+            $table->string('passport_number', 20);
+            $table->primary('passport_number');
+            $table->string('first_name', 30);
+            $table->string('last_name', 30);
+            $table->date('date_of_birth');
+        });
+        Schema::create('operation_exchange', function (Blueprint $table) {
+            $table->integer('operation_id');
+            $table->primary('operation_id');
+            $table->integer('exchange_rate_id');
+            $table->string('customer_passport_number');
+            $table->foreign('operation_id')->references('operation_id')->on('operation');
+            $table->foreign('exchange_rate_id')->references('exchange_rate_id')->on('exchange_rate');
+            $table->foreign('customer_passport_number')->references('passport_number')->on('customer');
+        });
     }
 
     /**
