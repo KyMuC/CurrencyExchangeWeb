@@ -71,6 +71,23 @@ class CreateTables extends Migration
             $table->foreign('exchange_rate_id')->references('exchange_rate_central_bank_id')->on('exchange_rate_central_bank');
         });
 
+        Schema::create('Banknotes_outflux', function (Blueprint $table) {
+            $table->integer('operation_id');
+            $table->integer('banknote_id');
+            $table->foreign('operation_id')->references('operation_id')->on('operation');
+            $table->foreign('banknote_id')->references('banknote_id')->on('banknote');
+            $table->primary(['operation_id', 'banknote_id']);
+        });
+
+        Schema::create('Banknotes_influx', function (Blueprint $table) {
+            $table->integer('operation_id');
+            $table->integer('banknote_id');
+            $table->foreign('operation_id')->references('operation_id')->on('operation');
+            $table->foreign('banknote_id')->references('banknote_id')->on('banknote');
+            $table->primary(['operation_id', 'banknote_id']);
+        });
+        
+
     }
 
     /**
