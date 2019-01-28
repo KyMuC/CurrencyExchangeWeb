@@ -60,5 +60,13 @@ class DatabaseSeeder extends Seeder
                 ['adress' => 'Полярная улица, дом ' . rand(1, 31)],
                 ['adress' => 'Измайловское шоссе, дом ' . rand(1, 31)],
             ]);
+            
+            DB:table('base_currency')->insert([
+                ['exchange_office_id' => 1, 'base_currency_code' => 'RUB'],
+                ['exchange_office_id' => 2, 'base_currency_code' => 'RUB'],
+                ['exchange_office_id' => 3, 'base_currency_code' => 'RUB'],
+                ['exchange_office_id' => 4, 'base_currency_code' => 'RUB'],
+                ['exchange_office_id' => 5, 'base_currency_code' => 'EUR'],
+                ]);
     }
 }
