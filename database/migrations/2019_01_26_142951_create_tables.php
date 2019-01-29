@@ -57,7 +57,7 @@ class CreateTables extends Migration
         });
 
         Schema::create('exchange_rate', function (Blueprint $table) {
-            $table->increments('exchange_rate_id');
+            $table->unsignedInteger('exchange_rate_id');
             $table->char('source_currency_code', 3);
             $table->char('target_currency_code', 3);
             $table->foreign('source_currency_code')->references('currency_code')->on('currency');
@@ -65,6 +65,8 @@ class CreateTables extends Migration
             $table->float('exchange_rate', 25,5);
             $table->date('date');
             $table->unsignedInteger('office_id');
+
+            $table->primary(['exchange_rate_id', 'date', 'office_id']);
 
             $table->foreign('office_id')->references('office_id')->on('exchange_office');
             $table->foreign('exchange_rate_id')->references('exchange_rate_central_bank_id')->on('exchange_rate_central_bank');
