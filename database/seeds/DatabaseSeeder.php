@@ -61,12 +61,21 @@ class DatabaseSeeder extends Seeder
                 ['adress' => 'Измайловское шоссе, дом ' . rand(1, 31)],
             ]);
             
-            DB:table('base_currency')->insert([
+            DB::table('base_currency')->insert([
                 ['exchange_office_id' => 1, 'base_currency_code' => 'RUB'],
                 ['exchange_office_id' => 2, 'base_currency_code' => 'RUB'],
                 ['exchange_office_id' => 3, 'base_currency_code' => 'RUB'],
                 ['exchange_office_id' => 4, 'base_currency_code' => 'RUB'],
                 ['exchange_office_id' => 5, 'base_currency_code' => 'EUR'],
                 ]);
+
+            DB::table('exchange_rate_central_bank')->insert([
+                ['source_currency_code' => 'RUB', 'target_currency_code' => 'USD', 'exchange_rate' => 0.02, 'date' => date("Y-m-d")],
+                ['source_currency_code' => 'USD', 'target_currency_code' => 'RUB', 'exchange_rate' => 65, 'date' => date("Y-m-d")],
+                ['source_currency_code' => 'RUB', 'target_currency_code' => 'EUR', 'exchange_rate' => 0.03, 'date' => date("Y-m-d")],
+                ['source_currency_code' => 'EUR', 'target_currency_code' => 'RUB', 'exchange_rate' => 75, 'date' => date("Y-m-d")],
+                ['source_currency_code' => 'EUR', 'target_currency_code' => 'USD', 'exchange_rate' => 1.25, 'date' => date("Y-m-d")],
+                ['source_currency_code' => 'USD', 'target_currency_code' => 'EUR', 'exchange_rate' => 0.9433, 'date' => date("Y-m-d")]
+            ]);
     }
 }
