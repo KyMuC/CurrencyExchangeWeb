@@ -17,7 +17,6 @@ class CreateTables extends Migration
             $table->char('currency_code', 3);
             $table->primary('currency_code');
             $table->string('currency_name', 30);
-            $table->float('cash_limit', 25, 5);
         });
 
         Schema::create('exchange_office', function (Blueprint $table) {
