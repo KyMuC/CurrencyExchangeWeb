@@ -89,5 +89,11 @@ class DatabaseSeeder extends Seeder
                 ]);
             } 
 
+            DB::table('cash_in_transit_company')->insert([
+                ['company_name' => 'Cashinout'],
+                ['company_name' => 'Золотая корона'],
+                ['company_name' => 'Юнистрим']
+            ]);
+
     }
 }
