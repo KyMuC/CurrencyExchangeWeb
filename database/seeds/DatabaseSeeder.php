@@ -94,6 +94,19 @@ class DatabaseSeeder extends Seeder
                 ['company_name' => 'Золотая корона'],
                 ['company_name' => 'Юнистрим']
             ]);
+            
+            for($company_id = 1; $company_id < 3; $company_id++)
+            {
+                for ($car_id = 1; $car_id < 3; $car_id++)
+                {
+                    DB::table('cash_in_transit_car')->insert([
+                        'car_model' => 'Mercedes-Benz Vito',
+                        'car_number' => 'К'.rand(100,999).'РО',
+                        'company_id' => $company_id
+                    ]);
+                }
+            }
+            
 
     }
 }
