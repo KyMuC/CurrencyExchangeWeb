@@ -85,7 +85,7 @@ class DatabaseSeeder extends Seeder
                     ['source_currency_code' => 'RUB', 'target_currency_code' => 'EUR', 'exchange_rate' => 0.013 + 0.001*rand(1,10), 'date' => date("Y-m-d"), 'office_id' => $exchange_office_id],
                     ['source_currency_code' => 'EUR', 'target_currency_code' => 'RUB', 'exchange_rate' => 75 + 0.15*rand(1,10), 'date' => date("Y-m-d"), 'office_id' => $exchange_office_id],
                     ['source_currency_code' => 'EUR', 'target_currency_code' => 'USD', 'exchange_rate' => 1.27 + 0.001*rand(1,10), 'date' => date("Y-m-d"), 'office_id' => $exchange_office_id],
-                    ['source_currency_code' => 'USD', 'target_currency_code' => 'EUB', 'exchange_rate' => 1.27 + 0.001*rand(1,10), 'date' => date("Y-m-d"), 'office_id' => $exchange_office_id]
+                    ['source_currency_code' => 'USD', 'target_currency_code' => 'EUR', 'exchange_rate' => 1.27 + 0.001*rand(1,10), 'date' => date("Y-m-d"), 'office_id' => $exchange_office_id]
                 ]);
             } 
 
