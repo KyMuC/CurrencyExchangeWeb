@@ -106,7 +106,54 @@ class DatabaseSeeder extends Seeder
                     ]);
                 }
             }
-            
 
+            $names_poll_female = array(
+                array('Светлана','Гончарова'),
+                array('Юлия','Остапенко'),
+                array('Станислава','Сергеева'),
+                array('Марина','Королёва'),
+                array('Екатерина','Куликова'),
+                array('Ольга','Бондаренко'),
+                array('Евгения','Филатова'));
+
+            $names_poll_male = array(
+                array('Александр','Пономарёв'),
+                array('Олег','Дегтярёв'),
+                array('Евгений','Головин'),
+                array('Виктор','Фадеев'),
+                array('Павел','Молчанов'),
+                array('Владислав','Скворцов'),
+                array('Владимир','Наумов'),
+                array('Пётр','Науменко'));
+
+            for ($exchange_office_id = 1; $exchange_office_id < 5; $exchange_office_id++) {
+                DB::table('employee')->insert([
+                    [
+                        'passport_number' => '45'.rand(10,13).rand(100000,999999),
+                        'first_name' => $names_poll_female[rand(0,6)][0],
+                        'last_name' => $names_poll_female[rand(0,6)][1],
+                        'date_of_birth' => rand(1985,1995).'-'.rand(1,12).'-'.rand(1,28),
+                        'exchange_office_id' => $exchange_office_id
+                    ],
+                    [
+                        'passport_number' => '45'.rand(10,13).rand(100000,999999),
+                        'first_name' => $names_poll_male[rand(0,6)][0],
+                        'last_name' => $names_poll_male[rand(0,6)][1],
+                        'date_of_birth' => rand(1985,1995).'-'.rand(1,12).'-'.rand(1,28),
+                        'exchange_office_id' => $exchange_office_id
+                    ]
+                ]);
+            }
+
+            DB::table('customer')->insert([
+                ['passport_number' => '45'.rand(10,13).rand(100000,999999),
+                'first_name' => $names_poll_female[rand(0,6)][0],
+                'last_name' => $names_poll_female[rand(0,6)][1],
+                'date_of_birth' => rand(1970,1999).'-'.rand(1,12).'-'.rand(1,28)],
+                ['passport_number' => '45'.rand(10,13).rand(100000,999999),
+                'first_name' => $names_poll_male[rand(0,6)][0],
+                'last_name' => $names_poll_male[rand(0,6)][1],
+                'date_of_birth' => rand(1970,1999).'-'.rand(1,12).'-'.rand(1,28)]
+            ]);
     }
 }
