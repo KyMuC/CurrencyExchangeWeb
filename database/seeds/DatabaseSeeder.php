@@ -155,5 +155,79 @@ class DatabaseSeeder extends Seeder
                 'last_name' => $names_poll_male[rand(0,6)][1],
                 'date_of_birth' => rand(1970,1999).'-'.rand(1,12).'-'.rand(1,28)]
             ]);
+
+            $currencies = array(
+                array('AUD', 'Австралийский доллар'),
+                array('AZN', 'Азербайджанский манат'),
+                array('AMD', 'Армянских драмов'),
+                array('BYN', 'Белорусский рубль'),
+                array('BGN', 'Болгарский лев'),
+                array('BRL', 'Бразильский реал'),
+                array('HUF', 'Венгерских форинтов'),
+                array('KRW', 'Вон Республики'),
+                array('HKD', 'Гонконгских долларов'),
+                array('DKK', 'Датская крона'),
+                array('USD', 'Доллар США'),
+                array('EUR', 'Евро'),
+                array('INR', 'Индийских рупий'),
+                array('KZT', 'Казахстанских тенге'),
+                array('CAD', 'Канадский доллар'),
+                array('KGS', 'Киргизских сомов'),
+                array('CNY', 'Китайских юаней'),
+                array('MDL', 'Молдавских леев'),
+                array('TMT', 'Новый туркменский'),
+                array('NOK', 'Норвежских крон'),
+                array('PLN', 'Польский злотый'),
+                array('RON', 'Румынский лей'),
+                array('SGD', 'Сингапурский доллар'),
+                array('TJS', 'Таджикских сомони'),
+                array('TRY', 'Турецкая лира'),
+                array('UZS', 'Узбекских сумов'),
+                array('UAH', 'Украинских гривен'),
+                array('GBP', 'Фунт стерлингов'),
+                array('CZK', 'Чешских крон'),
+                array('SEK', 'Шведских крон'),
+                array('CHF', 'Швейцарский франк'),
+                array('RUB','Рубль')
+            );
+
+            for ($exchange_office_id = 1; $exchange_office_id < 5; $exchange_office_id++)
+            {
+                DB::table('operation')->insert([
+                    'exchange_office' =>  $exchange_office_id,
+                    'datetime' => date('Y-m-d H:i:s').'.000'
+                ]);
+
+                DB::table('operation_cash_in_transit')->insert([
+                    'car_id'=>rand(1,9),
+                    'operation_id'=> $exchange_office_id
+                ]);
+
+                foreach($currencies as $currency)
+                {
+
+                    $max_nominal_value_id = DB::table('valid_nominal_value')->select('id')->where('currency_code', $currency[0])->max('id');
+                    $min_nominal_value_id = DB::table('valid_nominal_value')->select('id')->where('currency_code', $currency[0])->min('id');
+
+                    for($nominal_value_num = $min_nominal_value_id; $nominal_value_num < $max_nominal_value_id ; $nominal_value_num++)
+                    {
+                        $number_of_banknotes=rand(1,5);
+                        for($i = 0; $i < $number_of_banknotes; $i++)
+                        {
+                            DB::table('banknote')->insert([
+                                'currency_code' => $currency[0],
+                                'nominal_value' => DB::table('valid_nominal_value')->select('valid_nominal_value')->where('id', $nominal_value_num)->get()
+                            ]);
+                            
+                            $inserted_banknote_id = DB::table('banknote')->max('banknote_id');
+
+                            DB::table('Banknotes_influx')->insert([
+                                'operation_id' => $exchange_office_id, #one operation per office inserted so their ids are identical
+                                'banknote_id'=> $inserted_banknote_id
+                            ]);
+                        }
+                    }
+                }
+            }
     }
 }
