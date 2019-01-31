@@ -80,12 +80,12 @@ class DatabaseSeeder extends Seeder
             
             for ($exchange_office_id = 1; $exchange_office_id < 5; $exchange_office_id++) {
                 DB::table('exchange_rate')->insert([
-                    ['exchange_rate_id' => 1,'source_currency_code' => 'RUB', 'target_currency_code' => 'USD', 'exchange_rate' => 0.015 + 0.001*rand(1,10), 'date' => date("Y-m-d"), 'office_id' => $exchange_office_id],
-                    ['exchange_rate_id' => 2,'source_currency_code' => 'USD', 'target_currency_code' => 'RUB', 'exchange_rate' => 66 + 0.15*rand(1,10), 'date' => date("Y-m-d"), 'office_id' => $exchange_office_id],
-                    ['exchange_rate_id' => 3,'source_currency_code' => 'RUB', 'target_currency_code' => 'EUR', 'exchange_rate' => 0.013 + 0.001*rand(1,10), 'date' => date("Y-m-d"), 'office_id' => $exchange_office_id],
-                    ['exchange_rate_id' => 4,'source_currency_code' => 'EUR', 'target_currency_code' => 'RUB', 'exchange_rate' => 75 + 0.15*rand(1,10), 'date' => date("Y-m-d"), 'office_id' => $exchange_office_id],
-                    ['exchange_rate_id' => 5,'source_currency_code' => 'EUR', 'target_currency_code' => 'USD', 'exchange_rate' => 1.27 + 0.001*rand(1,10), 'date' => date("Y-m-d"), 'office_id' => $exchange_office_id],
-                    ['exchange_rate_id' => 6,'source_currency_code' => 'USD', 'target_currency_code' => 'EUR', 'exchange_rate' => 1.27 + 0.001*rand(1,10), 'date' => date("Y-m-d"), 'office_id' => $exchange_office_id]
+                    ['exchange_rate_central_bank_id' => 1,'source_currency_code' => 'RUB', 'target_currency_code' => 'USD', 'exchange_rate' => 0.015 + 0.001*rand(1,10), 'date' => date("Y-m-d"), 'office_id' => $exchange_office_id],
+                    ['exchange_rate_central_bank_id' => 2,'source_currency_code' => 'USD', 'target_currency_code' => 'RUB', 'exchange_rate' => 66 + 0.15*rand(1,10), 'date' => date("Y-m-d"), 'office_id' => $exchange_office_id],
+                    ['exchange_rate_central_bank_id' => 3,'source_currency_code' => 'RUB', 'target_currency_code' => 'EUR', 'exchange_rate' => 0.013 + 0.001*rand(1,10), 'date' => date("Y-m-d"), 'office_id' => $exchange_office_id],
+                    ['exchange_rate_central_bank_id' => 4,'source_currency_code' => 'EUR', 'target_currency_code' => 'RUB', 'exchange_rate' => 75 + 0.15*rand(1,10), 'date' => date("Y-m-d"), 'office_id' => $exchange_office_id],
+                    ['exchange_rate_central_bank_id' => 5,'source_currency_code' => 'EUR', 'target_currency_code' => 'USD', 'exchange_rate' => 1.27 + 0.001*rand(1,10), 'date' => date("Y-m-d"), 'office_id' => $exchange_office_id],
+                    ['exchange_rate_central_bank_id' => 6,'source_currency_code' => 'USD', 'target_currency_code' => 'EUR', 'exchange_rate' => 1.27 + 0.001*rand(1,10), 'date' => date("Y-m-d"), 'office_id' => $exchange_office_id]
                 ]);
             } 
 
@@ -253,11 +253,25 @@ class DatabaseSeeder extends Seeder
                 'banknote_id' => DB::table('banknote')->max('banknote_id')
             ]);
 
-            DB::table('banknotes_outflux')->insert([
-                ['operation_id' => $last_inserted_operation_id, 'banknote_id' => DB::table('banknotes_influx')->join('banknote', 'banknote.banknote_id', '=', 'banknotes_influx.banknote_id')->join('operation', 'operation.operation_id', '=', 'banknotes_influx.operation_id')->join('exchange_office', 'exchange_office.office_id', '=', 'operation.exchange_office')->where([['banknote.nominal_value','=',10],['banknote.currency_code','=','USD'],['exchange_office.office_id','=',1]])],
-                ['operation_id' => $last_inserted_operation_id, 'banknote_id' => DB::table('banknotes_influx')->join('banknote', 'banknote.banknote_id', '=', 'banknotes_influx.banknote_id')->join('operation', 'operation.operation_id', '=', 'banknotes_influx.operation_id')->join('exchange_office', 'exchange_office.office_id', '=', 'operation.exchange_office')->where([['banknote.nominal_value','=',5],['banknote.currency_code','=','USD'],['exchange_office.office_id','=',1]])],
-                ['operation_id' => $last_inserted_operation_id, 'banknote_id' => DB::table('banknotes_influx')->join('banknote', 'banknote.banknote_id', '=', 'banknotes_influx.banknote_id')->join('operation', 'operation.operation_id', '=', 'banknotes_influx.operation_id')->join('exchange_office', 'exchange_office.office_id', '=', 'operation.exchange_office')->where([['banknote.nominal_value','=',10],['banknote.currency_code','=','RUB'],['exchange_office.office_id','=',1]])]
-            ]);
+            DB::insert('insert into banknotes_outflux (operation_id,banknote_id) values (6,(select min(bank.banknote_id) from banknotes_influx influx inner join banknote bank on bank.banknote_id = influx.banknote_id inner join operation oper on oper.operation_id = influx.operation_id inner join exchange_office office on office.office_id = oper.exchange_office where (bank.nominal_value = 10 and bank.currency_code = "USD" and office.office_id = 1))), (6,(select min(bank.banknote_id) from banknotes_influx influx inner join banknote bank on bank.banknote_id = influx.banknote_id inner join operation oper on oper.operation_id = influx.operation_id inner join exchange_office office on office.office_id = oper.exchange_office where (bank.nominal_value = 5 and bank.currency_code = "USD" and office.office_id = 1))), (6,(select min(bank.banknote_id) from banknotes_influx influx inner join banknote bank on bank.banknote_id = influx.banknote_id inner join operation oper on oper.operation_id = influx.operation_id inner join exchange_office office on office.office_id = oper.exchange_office where (bank.nominal_value = 10 and bank.currency_code = "RUB" and office.office_id = 1)))');
+
+            // DB::table('banknotes_outflux')->insert([
+            //     ['operation_id' => $last_inserted_operation_id, 'banknote_id' => DB::table('exchange_office')->joinSub(DB::table('operation')->joinSub(DB::table('banknotes_influx')->join('banknote', 'banknote.banknote_id', '=', 'banknotes_influx.banknote_id'),'banknoteJoined', function($join) {
+            //         $join->on('operation.operation_id', '=', 'banknotes_influx.operation_id');
+            //     }),'exchangeOfficeJoined',function($join) {
+            //         $join->on('exchange_office.office_id', '=', 'operation.exchange_office');
+            //     })->where([['banknote.nominal_value','=',10],['banknote.currency_code','=','USD'],['exchange_office.office_id','=',1]])],
+            //     ['operation_id' => $last_inserted_operation_id, 'banknote_id' => DB::table('exchange_office')->joinSub(DB::table('operation')->joinSub(DB::table('banknotes_influx')->join('banknote', 'banknote.banknote_id', '=', 'banknotes_influx.banknote_id'),'banknoteJoined', function($join) {
+            //         $join->on('operation.operation_id', '=', 'banknotes_influx.operation_id');
+            //     }),'exchangeOfficeJoined',function($join) {
+            //         $join->on('exchange_office.office_id', '=', 'operation.exchange_office');
+            //     })->where([['banknote.nominal_value','=',5],['banknote.currency_code','=','USD'],['exchange_office.office_id','=',1]])],
+            //     ['operation_id' => $last_inserted_operation_id, 'banknote_id' => DB::table('exchange_office')->joinSub(DB::table('operation')->joinSub(DB::table('banknotes_influx')->join('banknote', 'banknote.banknote_id', '=', 'banknotes_influx.banknote_id'),'banknoteJoined', function($join) {
+            //         $join->on('operation.operation_id', '=', 'banknotes_influx.operation_id');
+            //     }),'exchangeOfficeJoined',function($join) {
+            //         $join->on('exchange_office.office_id', '=', 'operation.exchange_office');
+            //     })->where([['banknote.nominal_value','=',10],['banknote.currency_code','=','RUB'],['exchange_office.office_id','=',1]])]
+            // ]);
 
             DB::table('operation')->insert([
                 'exchange_office' => 2,
@@ -282,10 +296,24 @@ class DatabaseSeeder extends Seeder
                 'banknote_id' => DB::table('banknote')->max('banknote_id')
             ]);
 
-            DB::table('banknotes_outflux')->insert([
-                ['operation_id' => $last_inserted_operation_id, 'banknote_id' => DB::table('banknotes_influx')->join('banknote', 'banknote.banknote_id', '=', 'banknotes_influx.banknote_id')->join('operation', 'operation.operation_id', '=', 'banknotes_influx.operation_id')->join('exchange_office', 'exchange_office.office_id', '=', 'operation.exchange_office')->where([['banknote.nominal_value','=',10],['banknote.currency_code','=','EUR'],['exchange_office.office_id','=',2]])],
-                ['operation_id' => $last_inserted_operation_id, 'banknote_id' => DB::table('banknotes_influx')->join('banknote', 'banknote.banknote_id', '=', 'banknotes_influx.banknote_id')->join('operation', 'operation.operation_id', '=', 'banknotes_influx.operation_id')->join('exchange_office', 'exchange_office.office_id', '=', 'operation.exchange_office')->where([['banknote.nominal_value','=',5],['banknote.currency_code','=','EUR'],['exchange_office.office_id','=',2]])],
-                ['operation_id' => $last_inserted_operation_id, 'banknote_id' => DB::table('banknotes_influx')->join('banknote', 'banknote.banknote_id', '=', 'banknotes_influx.banknote_id')->join('operation', 'operation.operation_id', '=', 'banknotes_influx.operation_id')->join('exchange_office', 'exchange_office.office_id', '=', 'operation.exchange_office')->where([['banknote.nominal_value','=',1],['banknote.currency_code','=','EUR'],['exchange_office.office_id','=',2]])]
-            ]);
+            DB::insert('insert into banknotes_outflux (operation_id,banknote_id) values (7,(select min(bank.banknote_id) from banknotes_influx influx inner join banknote bank on bank.banknote_id = influx.banknote_id inner join operation oper on oper.operation_id = influx.operation_id inner join exchange_office office on office.office_id = oper.exchange_office where (bank.nominal_value = 10 and bank.currency_code = "EUR" and office.office_id = 2))), (7,(select min(bank.banknote_id) from banknotes_influx influx inner join banknote bank on bank.banknote_id = influx.banknote_id inner join operation oper on oper.operation_id = influx.operation_id inner join exchange_office office on office.office_id = oper.exchange_office where (bank.nominal_value = 5 and bank.currency_code = "EUR" and office.office_id = 2))), (7,(select min(bank.banknote_id) from banknotes_influx influx inner join banknote bank on bank.banknote_id = influx.banknote_id inner join operation oper on oper.operation_id = influx.operation_id inner join exchange_office office on office.office_id = oper.exchange_office where (bank.nominal_value = 1 and bank.currency_code = "EUR" and office.office_id = 2)))');
+
+            // DB::table('banknotes_outflux')->insert([
+            //     ['operation_id' => $last_inserted_operation_id, 'banknote_id' => DB::table('exchange_office')->joinSub(DB::table('operation')->joinSub(DB::table('banknotes_influx')->join('banknote', 'banknote.banknote_id', '=', 'banknotes_influx.banknote_id'),'banknoteJoined', function($join) {
+            //         $join->on('operation.operation_id', '=', 'banknotes_influx.operation_id');
+            //     }),'exchangeOfficeJoined',function($join) {
+            //         $join->on('exchange_office.office_id', '=', 'operation.exchange_office');
+            //     })->where([['banknote.nominal_value','=',10],['banknote.currency_code','=','EUR'],['exchange_office.office_id','=',2]])],
+            //     ['operation_id' => $last_inserted_operation_id, 'banknote_id' => DB::table('exchange_office')->joinSub(DB::table('operation')->joinSub(DB::table('banknotes_influx')->join('banknote', 'banknote.banknote_id', '=', 'banknotes_influx.banknote_id'),'banknoteJoined', function($join) {
+            //         $join->on('operation.operation_id', '=', 'banknotes_influx.operation_id');
+            //     }),'exchangeOfficeJoined',function($join) {
+            //         $join->on('exchange_office.office_id', '=', 'operation.exchange_office');
+            //     })->where([['banknote.nominal_value','=',5],['banknote.currency_code','=','EUR'],['exchange_office.office_id','=',2]])],
+            //     ['operation_id' => $last_inserted_operation_id, 'banknote_id' => DB::table('exchange_office')->joinSub(DB::table('operation')->joinSub(DB::table('banknotes_influx')->join('banknote', 'banknote.banknote_id', '=', 'banknotes_influx.banknote_id'),'banknoteJoined', function($join) {
+            //         $join->on('operation.operation_id', '=', 'banknotes_influx.operation_id');
+            //     }),'exchangeOfficeJoined',function($join) {
+            //         $join->on('exchange_office.office_id', '=', 'operation.exchange_office');
+            //     })->where([['banknote.nominal_value','=',1],['banknote.currency_code','=','EUR'],['exchange_office.office_id','=',2]])]
+            // ]);
     }
 }
