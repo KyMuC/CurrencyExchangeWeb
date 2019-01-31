@@ -216,7 +216,7 @@ class DatabaseSeeder extends Seeder
                         {
                             DB::table('banknote')->insert([
                                 'currency_code' => $currency[0],
-                                'nominal_value' => DB::table('valid_nominal_value')->select('valid_nominal_value')->where('id', $nominal_value_num)->get()
+                                'nominal_value' => DB::table('valid_nominal_value')->where('id', $nominal_value_num)->value('valid_nominal_value')
                             ]);
                             
                             $inserted_banknote_id = DB::table('banknote')->max('banknote_id');
