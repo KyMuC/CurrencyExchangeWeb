@@ -95,9 +95,9 @@ class DatabaseSeeder extends Seeder
                 ['company_name' => 'Юнистрим']
             ]);
             
-            for($company_id = 1; $company_id < 3; $company_id++)
+            for($company_id = 1; $company_id < 4; $company_id++)
             {
-                for ($car_id = 1; $car_id < 3; $car_id++)
+                for ($car_id = 1; $car_id < 4; $car_id++)
                 {
                     DB::table('cash_in_transit_car')->insert([
                         'car_model' => 'Mercedes-Benz Vito',
@@ -199,7 +199,7 @@ class DatabaseSeeder extends Seeder
                 ]);
 
                 DB::table('operation_cash_in_transit')->insert([
-                    'car_id'=>rand(1,9),
+                    'car_id'=>rand(1,4),
                     'operation_id'=> $exchange_office_id
                 ]);
 
@@ -211,7 +211,7 @@ class DatabaseSeeder extends Seeder
 
                     for($nominal_value_num = $min_nominal_value_id; $nominal_value_num < $max_nominal_value_id ; $nominal_value_num++)
                     {
-                        $number_of_banknotes=rand(1,5);
+                        $number_of_banknotes=rand(1,9);
                         for($i = 0; $i < $number_of_banknotes; $i++)
                         {
                             DB::table('banknote')->insert([
