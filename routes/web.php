@@ -16,3 +16,7 @@ Route::get('/add_good', 'GoodsController@add');
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
