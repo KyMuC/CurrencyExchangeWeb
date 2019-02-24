@@ -43,13 +43,18 @@
             }
 
             .footer {
-                /* align-items: center;
-                display: flex;
-                justify-content: center; */
                 position: absolute;
                 text-align: center;
                 bottom: 40px;
-                /* position: fixed; */
+            }
+
+            .footer p {
+                display: inline-block;
+                vertical-align: middle;
+            }
+
+            .footer img {
+                vertical-align: middle;
             }
 
             .content {
@@ -103,9 +108,11 @@
             </div>
 
             <div class="links footer">
-                <a href="https://twitter.com/_kymuc">
-                    <img src="https://userscontent2.emaze.com/images/fcb8e84d-d417-4c27-b8e0-dfc0ab0b0927/427469ce-ceb3-415d-8736-632456df4e36.png" style="margin-right:10px;align:bottom;width:2%;height:2%"/>
-                    Tweet us!
+                <a href="https://twitter.com/_kymuc" style="vertical-align: middle;">
+                    <img src="https://userscontent2.emaze.com/images/fcb8e84d-d417-4c27-b8e0-dfc0ab0b0927/427469ce-ceb3-415d-8736-632456df4e36.png" style="margin-right:10px;width:5%;"/>
+                    <p>
+                        Tweet us!
+                    </p>
                 </a>
             </div>
 
