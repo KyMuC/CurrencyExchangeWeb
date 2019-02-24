@@ -16,6 +16,17 @@
 
                     You are logged in!
                 </div>
+
+                <div>
+                    <ul>
+                        @for($i = 0; $i < count($currencies); $i++)
+                            <?php $curr = $currencies[$i]; ?>
+                            <li>
+                                Код валюты: {{ $curr->currency_code }} Название валюты: {{ $curr->currency_name }}
+                            </li>
+                        @endfor
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
