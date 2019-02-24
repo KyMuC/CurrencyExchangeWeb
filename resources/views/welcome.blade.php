@@ -1,10 +1,13 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
+    <?php config(['app.name'=>'Currency exchange web 💣']);?>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Currency exchange web 💣</title>
+        <title>
+        {{config('app.name')}}<!-- Currency exchange web 💣 -->
+        </title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
@@ -98,7 +101,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                Currency exchange web 💣
+                {{config('app.name')}}
                 </div>
 
                 <div class="links">
