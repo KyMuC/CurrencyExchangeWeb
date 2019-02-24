@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>Currency exchange web 💣</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
@@ -18,6 +18,16 @@
                 font-weight: 200;
                 height: 100vh;
                 margin: 0;
+                background-color: #d1eaf6;
+            }
+
+            footer {
+                /* align-items: center;
+                display: flex;
+                justify-content: center; */
+                text-align: center;
+                margin-top: -80px;
+                /* position: fixed; */
             }
 
             .full-height {
@@ -38,6 +48,7 @@
                 position: absolute;
                 right: 10px;
                 top: 18px;
+                background-color: #d1eaf6;
             }
 
             .content {
@@ -81,18 +92,21 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                Currency exchange web 💣
                 </div>
 
                 <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                    <a href="http://cbr.ru/">CB of Russia</a>
                 </div>
             </div>
         </div>
+        <footer>
+            <div class="links">
+            <a href="https://twitter.com/_kymuc">
+            <p><img src="https://userscontent2.emaze.com/images/fcb8e84d-d417-4c27-b8e0-dfc0ab0b0927/427469ce-ceb3-415d-8736-632456df4e36.png" style="margin-right:10px;align:bottom;width:2%;height:2%"/>
+                Tweet us!</p>
+            </a>
+            </div>
+        </footer>
     </body>
 </html>
