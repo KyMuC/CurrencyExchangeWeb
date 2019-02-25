@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -49,8 +50,7 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'passport_number' => ['required', 'string', 'max:20'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
         ]);
     }
@@ -64,9 +64,39 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
+            'passport_number' => $data['passport_number'],
             'password' => Hash::make($data['password']),
         ]);
     }
+
+    // protected function register(Request $request) {
+    //     $passport_number = $request->get('passport_number');
+    //     $password_hash = Hash::make($request->get('password'));
+
+    //     $u = new User;
+
+    //     $u->passport_number = $passport_number;
+    //     $u->password = $password_hash;
+
+    //     $u->save();
+    // }
+
+    // public function activateUser(string $activationCode)
+    // {
+    //     try {
+    //         $user = app(User::class)->where('activation_code', $activationCode)->first();
+    //         if (!$user) {
+    //             return "The code does not exist for any user in our system.";
+    //         }
+    //         $user->status          = 1;
+    //         $user->activation_code = null;
+    //         $user->save();
+    //         auth()->login($user);
+    //     } catch (\Exception $exception) {
+    //         logger()->error($exception);
+    //         return "Whoops! something went wrong.";
+    //     }
+    //     return redirect()->to('/home');
+    // }
+
 }

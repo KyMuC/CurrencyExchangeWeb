@@ -140,6 +140,10 @@ class CreateTables extends Migration
             $table->char('base_currency_code', 3);
             $table->foreign('base_currency_code')->references('currency_code')->on('currency');
         });
+
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreign('passport_number')->references('passport_number')->on('customer');
+        });
     }
 
     /**
@@ -165,5 +169,8 @@ class CreateTables extends Migration
         Schema::dropIfExists('operation');
         Schema::dropIfExists('exchange_office');
         Schema::dropIfExists('currency');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropForeign('passport_number');
+        });
     }
 }
