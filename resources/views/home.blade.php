@@ -16,16 +16,25 @@
                     You are logged in!
                 </div>
 
-                <div>
-                    <ul>
-                        @for($i = 0; $i < count($currencies); $i++)
-                            <?php $curr = $currencies[$i]; ?>
-                            <li>
-                                Код валюты: {{ $curr->currency_code }} Название валюты: {{ $curr->currency_name }}
-                            </li>
-                        @endfor
-                    </ul>
-                </div>
+                @if(!Auth::user()->isAdmin())
+                    @if(count($orders) > 0)
+                    <span>Latest orders:</span>
+                    <div>
+                        <ul style="list-style: none">
+                            @for($i = 0; $i < count($orders); $i++)
+                                <?php $order = $orders[$i]; ?>
+                                <li class="card">
+                                    <span>Office: {{ App\Office::where('office_id', $order->office_id)->first()->adress}}</span>
+                                    <span>Currency: {{ App\Currency::where('currency_code', $order->target_currency_code)->first()->currency_name}}</span>
+                                    <span>Amount: {{ number_format($order->target_currency_amount,2) }}</span>
+                                    <span>Status: {{ $order->status }}</span>
+                                </li>
+                            @endfor
+                        </ul>
+                    </div>
+                    @endif
+                @endif
+
             </div>
         </div>
     </div>

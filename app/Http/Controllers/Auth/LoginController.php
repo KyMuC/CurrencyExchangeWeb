@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use App\User;
 
 class LoginController extends Controller
 {
@@ -36,4 +38,40 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    // public function authenticate(Request $request)
+    // {
+    //     $credentials = $request->only('passport_number', 'password');
+
+    //     if (Auth::attempt($credentials)) {
+    //         return redirect()->to('/home');
+    //     }
+    // }
+
+    // public function authenticate(Request $request)
+    // {
+    //     $passport_number = $request->get('passport_number');
+    //     $password = $request->get('password');
+
+    //     $user = User::where('passport_number', $passport_number)->first();
+
+    //     if($user !== null) {
+    //         if($user->password === $password) {
+    //             Auth::loginUsingId($user->id);
+    //         }
+    //     }
+    //     return redirect()->to('/home');
+    // }
+
+    public function username() {
+        return 'passport_number';
+    }
+
+    // protected function credentials(Request $request)
+    // {
+    //     return [
+    //         'passport_number'=>$request->get('passport_number'),
+    //         'password'=>$request->password,
+    //     ];
+    // }
 }

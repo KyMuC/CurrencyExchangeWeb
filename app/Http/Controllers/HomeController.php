@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Currency;
+use App\Order;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -25,6 +27,7 @@ class HomeController extends Controller
     public function index()
     {
         $currencies = Currency::all();
-        return view('home', ['currencies' => $currencies]);
+        $orders = Order::where('customer_passport_number', Auth::user()->passport_number)->get(); 
+        return view('home', ['currencies' => $currencies, 'orders' => $orders]);
     }
 }
