@@ -5,7 +5,7 @@
     <div class="row justify-content-center" >
         <div class="col-md-8" >
             <div class="card">
-                <div class="card-header" style="background-color:#11255a;text-color:#ffffff"><select style="background-color:#11255a;color:#ffffff">
+                <div class="card-header" style="background-color:#11255a;text-color:#ffffff"><select style="border:0px;outline:none;background-color:#11255a;color:#ffffff">
                     <option selected value="{{$offices[0]->id}}">{{$offices[0]->adress}}</option>
                     @for($i = 1; $i < count($offices); $i++)
                     <?php $office = $offices[$i]?>
