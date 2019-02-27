@@ -8,11 +8,11 @@
                 <div class="card-header" style="background-color:#11255a;text-color:#ffffff">
                     <form>
                     <select name="exchange_office" style="border:0px;outline:none;background-color:#11255a;color:#ffffff" onchange="this.form.submit()">
-                    <option disabled selected>Select an exchange office</option>
+                    <!-- <option disabled selected>Select an exchange office</option> -->
                     <!-- <option selected value="{{ $offices[0]->office_id }}">{{$offices[0]->adress}}</option> -->
                     @for($i = 0; $i < count($offices); $i++)
                     <?php $office = $offices[$i]?>
-                    <option value = "{{ $office->office_id }}">{{$office->adress}}</option>
+                    <option <?php if ($_GET['exchange_office'] == $i+1) { ?>selected="true" <?php }; ?> value = "{{ $office->office_id }}">{{$office->adress}}</option>
                     @endfor
                     </select>
                     </form>
