@@ -10,9 +10,17 @@
                     <select name="exchange_office" style="border:0px;outline:none;background-color:#11255a;color:#ffffff" onchange="this.form.submit()">
                     <!-- <option disabled selected>Select an exchange office</option> -->
                     <!-- <option selected value="{{ $offices[0]->office_id }}">{{$offices[0]->adress}}</option> -->
+                    @if(!isset($_GET["exchange_office"]))
+                    <option disabled selected>Select an exchange office</option>
+                    @endif
                     @for($i = 0; $i < count($offices); $i++)
                     <?php $office = $offices[$i]?>
+                    @if(isset($_GET["exchange_office"]))
                     <option <?php if ($_GET['exchange_office'] == $i+1) { ?>selected="true" <?php }; ?> value = "{{ $office->office_id }}">{{$office->adress}}</option>
+                    @endif
+                    @if(!isset($_GET["exchange_office"]))
+                    <option value = "{{ $office->office_id }}">{{$office->adress}}</option>
+                    @endif
                     @endfor
                     </select>
                     </form>
@@ -23,7 +31,7 @@
                             $office_id = $_GET["exchange_office"];
                             $exchange_rates = App\ExchangeRate::where('office_id', $office_id)->get();
                         ?>
-                        <table class="card">
+                        <table class="card" style="font-family:nunito;font-kerning:normal">
                             <tr>
                                 <th>хуй</th>
                                 <th>жопа</th>
