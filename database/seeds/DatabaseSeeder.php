@@ -150,7 +150,7 @@ class DatabaseSeeder extends Seeder
                 'first_name' => $names_poll_female[rand(0,6)][0],
                 'last_name' => $names_poll_female[rand(0,6)][1],
                 'date_of_birth' => rand(1970,1999).'-'.rand(1,12).'-'.rand(1,28)],
-                ['passport_number' => '45'.rand(10,13).rand(100000,999999),
+                ['passport_number' => '450'.rand(6,9).rand(100000,999999),
                 'first_name' => $names_poll_male[rand(0,6)][0],
                 'last_name' => $names_poll_male[rand(0,6)][1],
                 'date_of_birth' => rand(1970,1999).'-'.rand(1,12).'-'.rand(1,28)]
