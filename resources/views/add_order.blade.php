@@ -15,17 +15,10 @@
 
                             <div class="col-md-6">
                             <select id="exchange_office" name="exchange_office">
-                            @if(!isset($_GET["exchange_office"]))
                             <option disabled selected>Select an exchange office</option>
-                            @endif
                             @for($i = 0; $i < count($offices); $i++)
                             <?php $office = $offices[$i]?>
-                            @if(isset($_GET["exchange_office"]))
-                            <option <?php if ($_GET['exchange_office'] == $i+1) { ?>selected="true" <?php }; ?> value = "{{ $office->office_id }}">{{$office->adress}}</option>
-                            @endif
-                            @if(!isset($_GET["exchange_office"]))
                             <option value = "{{ $office->office_id }}">{{$office->adress}}</option>
-                            @endif
                             @endfor
                             </select>
                                 <!-- <input id="passport_number" type="text" class="form-control{{ $errors->has('passport_number') ? ' is-invalid' : '' }}" name="passport_number" value="{{ old('passport_number') }}" required autofocus>
@@ -44,17 +37,10 @@
 
                             <div class="col-md-6">
                             <select id="currency" name="currency_code">
-                            @if(!isset($_GET["currency_code"]))
                             <option disabled selected>Select a currency</option>
-                            @endif
                             @for($i = 0; $i < count($currencies); $i++)
                             <?php $currency = $currencies[$i]?>
-                            @if(isset($_GET["currency_code"]))
-                            <option <?php if (old('currency_code') == $currency->currency_code) { ?>selected="true" <?php }; ?> value = "{{ $currency->currency_code }}">{{$currency->currency_code}}</option>
-                            @endif
-                            @if(!isset($_GET["currency_code"]))
-                            <option value = "{{ $currency->currency_code }}">{{$currency->currency_code}}</option>
-                            @endif
+                            <option value = "{{ $currency->currency_code }}">{{$currency->currency_code}} ({{$currency->currency_name}})</option>
                             @endfor
                             </select>
                                 <!-- <input id="passport_number" type="text" class="form-control{{ $errors->has('passport_number') ? ' is-invalid' : '' }}" name="passport_number" value="{{ old('passport_number') }}" required autofocus>
@@ -64,6 +50,15 @@
                                         <strong>{{ $errors->first('passport_number') }}</strong>
                                     </span>
                                 @endif -->
+                            </div>
+                            
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="target_currency_amount" class="col-md-4 col-form-label text-md-right">{{ __('Target currency amount') }}</label>
+
+                            <div class="col-md-6">
+                            <input id="target_currency_amount" name="target_currency_amount" type="number" step="0.01" min="0.01" value="0">
                             </div>
                             
                         </div>
