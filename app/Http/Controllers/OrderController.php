@@ -29,7 +29,7 @@ class OrderController extends Controller
 
         $order = new Order;
 
-        $order->target_currency_code = $target_currency_amount;
+        $order->target_currency_code = $target_currency_code;
         $order->office_id = $office_id;
         $order->target_currency_amount = $target_currency_amount;
         $order->date = date('Y-m-d');
