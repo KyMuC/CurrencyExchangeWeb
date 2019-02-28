@@ -6,12 +6,16 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Order;
+use App\Currency;
+use App\Office;
 
 class OrderController extends Controller
 {
     public function showOrderForm() {
         if(!Auth::user()->isAdmin()) {
-            return view('add_order');
+            $offices = Office::all();
+            $currencies = Currency::all();
+            return view('add_order',['offices' => $offices,'currencies' => $currencies]);
         }
         else {
             return redirect('/home');
@@ -19,8 +23,8 @@ class OrderController extends Controller
     }
 
     public function add(Request $request) {
-        $target_currency_code = $request->get('target_currency_code');
-        $office_id = $request->get('office_id');
+        $target_currency_code = $request->get('currency_code');
+        $office_id = $request->get('exchange_office');
         $target_currency_amount = $request->get('target_currency_amount');
 
         $order = new Order;
@@ -28,6 +32,8 @@ class OrderController extends Controller
         $order->target_currency_code = $target_currency_amount;
         $order->office_id = $office_id;
         $order->target_currency_amount = $target_currency_amount;
+        $order->date = date('Y-m-d');
+        $order->customer_passport_number =Auth::user()->passport_number;
 
         $order->save();
     }
