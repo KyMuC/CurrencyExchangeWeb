@@ -31,18 +31,18 @@
                             $office_id = $_GET["exchange_office"];
                             $exchange_rates = App\ExchangeRate::where('office_id', $office_id)->get();
                         ?>
-                        <table class="card" style="font-family:nunito;font-kerning:normal">
+                        <table>
                             <tr>
                                 <th>хуй</th>
                                 <th>жопа</th>
-                                <th>хех</th>
+                                <th style="text-align:right">хех</th>
                             </tr>    
                         @for($i = 0; $i < count($exchange_rates); $i++)
                         <?php $exchange_rate = $exchange_rates[$i] ?>
                             <tr>
-                                <td>{{ App\Currency::where('currency_code', $exchange_rate->source_currency_code)->first()->currency_name }}</td>
-                                <td>{{ App\Currency::where('currency_code', $exchange_rate->target_currency_code)->first()->currency_name }}</td>
-                                <td>{{ number_format($exchange_rate->exchange_rate, 2) }}</td>
+                                <td style="width:15%">{{ App\Currency::where('currency_code', $exchange_rate->source_currency_code)->first()->currency_name }}</td>
+                                <td style="width:15%">{{ App\Currency::where('currency_code', $exchange_rate->target_currency_code)->first()->currency_name }}</td>
+                                <td style="width:70%;text-align:right">{{ number_format($exchange_rate->exchange_rate, 2) }}</td>
                             </tr>    
                         @endfor
                         </table>

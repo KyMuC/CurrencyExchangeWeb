@@ -11,6 +11,7 @@
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
+        <link rel="icon" href="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/facebook/158/bomb_1f4a3.png">
 
         <!-- Styles -->
         <style>
@@ -106,6 +107,7 @@
 
                 <div class="links">
                     <a href="http://cbr.ru/">CB of Russia</a>
+                    <a href="/exchange_rates">Our exchange rates as of {{date('d-m-Y')}}</a>
                 </div>
 
             </div>

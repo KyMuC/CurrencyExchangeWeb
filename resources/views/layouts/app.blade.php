@@ -19,6 +19,23 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="icon" href="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/facebook/158/bomb_1f4a3.png">
+    <style>
+    tr:nth-child(even) {
+      background-color: #d1eaf6;
+    }
+    table {
+        font-family: Nunito;
+        width:100%;
+    }
+
+    td, th {
+        font-family: Nunito;
+        padding: 5px;
+        /* width: 33%; */
+        text-align:left;
+    }
+    </style>
 </head>
 <body style="background-color:#ececec">
     <div id="app">
