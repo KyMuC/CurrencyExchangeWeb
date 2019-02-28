@@ -20,4 +20,4 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/exchange_rates', 'ExchangeRateController@index')->name('rates');
+Route::get('/exchange_rates', 'ExchangeRateController@index')->name('exchange_rates');
