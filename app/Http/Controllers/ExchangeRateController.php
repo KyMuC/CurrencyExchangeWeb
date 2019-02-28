@@ -9,8 +9,8 @@ class ExchangeRateController extends Controller
     public function index()
     {
         $offices = Office::all();
-        $exchange_rates = ExchangeRate::where('date',date('Y-m-d'))->get();
+        // $exchange_rates = ExchangeRate::where('date',date('Y-m-d'))->get();
 
-        return view('exchange_rates',['offices' => $offices, 'exchange_rates' => $exchange_rates]);
+        return view('exchange_rates',['offices' => $offices]);
     }
 }

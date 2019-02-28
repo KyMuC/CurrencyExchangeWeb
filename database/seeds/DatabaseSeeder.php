@@ -78,7 +78,7 @@ class DatabaseSeeder extends Seeder
                 ['source_currency_code' => 'USD', 'target_currency_code' => 'EUR', 'exchange_rate' => 0.9433, 'date' => date("Y-m-d")]
             ]);
             
-            for ($exchange_office_id = 1; $exchange_office_id < 5; $exchange_office_id++) {
+            for ($exchange_office_id = 1; $exchange_office_id <= 5; $exchange_office_id++) {
                 DB::table('exchange_rate')->insert([
                     ['exchange_rate_central_bank_id' => 1,'source_currency_code' => 'RUB', 'target_currency_code' => 'USD', 'exchange_rate' => 0.015 + 0.001*rand(1,10), 'date' => date("Y-m-d"), 'office_id' => $exchange_office_id],
                     ['exchange_rate_central_bank_id' => 2,'source_currency_code' => 'USD', 'target_currency_code' => 'RUB', 'exchange_rate' => 66 + 0.15*rand(1,10), 'date' => date("Y-m-d"), 'office_id' => $exchange_office_id],

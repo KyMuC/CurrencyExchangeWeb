@@ -29,7 +29,8 @@
                     @if(isset($_GET["exchange_office"]))
                         <?php
                             $office_id = $_GET["exchange_office"];
-                            $exchange_rates = App\ExchangeRate::where('office_id', $office_id)->get();
+                            $exchange_rates = App\ExchangeRate::where([['date','=',date('Y-m-d')],['office_id','=',$office_id]])->get();
+                            // $exchange_rates_for_real = array_filter((array)$exchange_rates, function(App\ExchangeRate $exchange_rate_param) {return $exchange_rate_param->date == date(Y-m-d);})
                         ?>
                         <table>
                             <tr>
