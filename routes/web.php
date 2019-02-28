@@ -21,3 +21,6 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/exchange_rates', 'ExchangeRateController@index')->name('exchange_rates');
+
+Route::get('/add_order', 'OrderController@showOrderForm');
+Route::post('/add_order', 'OrderController@add')->name('add_order');
