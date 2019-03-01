@@ -12,24 +12,28 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
                     You are logged in!
                 </div>
 
                 @if(!Auth::user()->isAdmin())
                     @if(count($orders) > 0)
-                    <span>Latest orders:</span>
-                    <div>
-                        <ul style="list-style: none">
+                    <span class="card-body">Latest orders:</span>
+                    <div class="card-body">
+                        <ul style="list-style: none;padding:2px">
+                        <form method="post" action="{{ route('exterminate_order')}}">
+                        @csrf
                             @for($i = 0; $i < count($orders); $i++)
                                 <?php $order = $orders[$i]; ?>
-                                <li class="card">
+                                <li class="card" value="{{$order->id}}" name="order_item">
                                     <span>Office: {{ App\Office::where('office_id', $order->office_id)->first()->adress}}</span>
                                     <span>Currency: {{ App\Currency::where('currency_code', $order->target_currency_code)->first()->currency_name}}</span>
                                     <span>Amount: {{ number_format($order->target_currency_amount,2) }}</span>
                                     <span>Status: {{ $order->status }}</span>
+                                    <button type="submit" style="background-color:#ff0000">Submit</button>
                                 </li>
                             @endfor
+                        </form>
+                            
                         </ul>
                     </div>
                     @endif
