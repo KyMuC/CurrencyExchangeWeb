@@ -141,9 +141,9 @@ class CreateTables extends Migration
             $table->foreign('base_currency_code')->references('currency_code')->on('currency');
         });
 
-        Schema::table('users', function (Blueprint $table) {
-            $table->foreign('passport_number')->references('passport_number')->on('customer');
-        });
+        // Schema::table('users', function (Blueprint $table) {
+        //     $table->foreign('passport_number')->references('passport_number')->on('customer');
+        // });
     }
 
     /**

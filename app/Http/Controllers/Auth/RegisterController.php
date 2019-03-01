@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
+use App\Customer;
+use App\Employee;
 
 class RegisterController extends Controller
 {
@@ -50,7 +52,7 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'passport_number' => ['required', 'string', 'max:20'],
+            'passport_number' => ['required', 'string', 'max:20', 'passport_exists'],
             // 'name' => ['required', 'string'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
         ]);
@@ -64,11 +66,20 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'passport_number' => $data['passport_number'],
-            // 'name' => $data['name'],
-            'password' => Hash::make($data['password']),
-        ]);
+        if(null !== Customer::where('passport_number', $data['passport_number'])->first()) {
+            return User::create([
+                'passport_number' => $data['passport_number'],
+                'password' => Hash::make($data['password']),
+                'isAdmin' => 0,
+            ]);
+        }
+        else {
+            return User::create([
+                'passport_number' => $data['passport_number'],
+                'password' => Hash::make($data['password']),
+                'isAdmin' => 1,
+            ]);
+        }
     }
 
     // protected function register(Request $request) {

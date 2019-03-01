@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'passport_number', 'password',
+        'passport_number', 'password', 'isAdmin'
     ];
 
     /**
@@ -27,8 +27,6 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-
-    protected $attributes = ['isAdmin' => 0];
     
     function isAdmin() {
         return $this->isAdmin == 1;

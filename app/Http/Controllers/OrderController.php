@@ -15,7 +15,7 @@ class OrderController extends Controller
         if(!Auth::user()->isAdmin()) {
             $offices = Office::all();
             $currencies = Currency::all();
-            return view('add_order',['offices' => $offices,'currencies' => $currencies]);
+            return view('add_order', ['offices' => $offices,'currencies' => $currencies]);
         }
         else {
             return redirect('/home');
@@ -23,6 +23,7 @@ class OrderController extends Controller
     }
 
     public function add(Request $request) {
+
         $target_currency_code = $request->get('currency_code');
         $office_id = $request->get('exchange_office');
         $target_currency_amount = $request->get('target_currency_amount');
@@ -36,5 +37,7 @@ class OrderController extends Controller
         $order->customer_passport_number =Auth::user()->passport_number;
 
         $order->save();
+
+        return redirect('/add_order');
     }
 }
