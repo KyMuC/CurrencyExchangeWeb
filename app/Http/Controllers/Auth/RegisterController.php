@@ -55,6 +55,9 @@ class RegisterController extends Controller
             'passport_number' => ['required', 'string', 'max:20', 'passport_exists'],
             // 'name' => ['required', 'string'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
+        ],
+        [
+            'passport_number.passport_exists' => 'No customer or employee with such passport number!',
         ]);
     }
 
