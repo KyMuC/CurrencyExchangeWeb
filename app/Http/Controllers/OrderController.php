@@ -24,7 +24,10 @@ class OrderController extends Controller
 
     public function exterminate(Request $request){
         $order = Order::where('id',$request->get('order_item'))->first();
-        $order->destroy();
+        if ($order->status == 'Moderation') {
+            $order->delete();
+        }
+
 
         return redirect('/home');        
         }
