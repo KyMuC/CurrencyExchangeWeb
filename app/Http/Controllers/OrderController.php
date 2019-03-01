@@ -22,6 +22,13 @@ class OrderController extends Controller
         }
     }
 
+    public function exterminate(Request $request){
+        $order = Order::where('id',$request->get('order_item'))->first();
+        $order->destroy();
+
+        return redirect('/home');        
+        }
+
     public function add(Request $request) {
         $target_currency_code = $request->get('currency_code');
         $office_id = $request->get('exchange_office');
@@ -36,5 +43,6 @@ class OrderController extends Controller
         $order->customer_passport_number =Auth::user()->passport_number;
 
         $order->save();
+        return redirect('/home');
     }
 }
