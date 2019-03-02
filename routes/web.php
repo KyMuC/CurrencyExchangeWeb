@@ -25,4 +25,4 @@ Route::get('/exchange_rates', 'ExchangeRateController@index')->name('exchange_ra
 Route::get('/add_order', 'OrderController@showOrderForm');
 Route::post('/add_order', 'OrderController@add')->name('add_order');
 Route::post('/home','OrderController@exterminate')->name('exterminate_order');
-Route::post('/home','OrderController@manageOrder')->name('manage_order');
+Route::post('/home/manage','OrderController@manageOrder')->name('manage_order');
