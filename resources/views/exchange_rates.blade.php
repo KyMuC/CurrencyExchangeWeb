@@ -34,9 +34,9 @@
                         ?>
                         <table>
                             <tr>
-                                <th>хуй</th>
-                                <th>жопа</th>
-                                <th style="text-align:right">хех</th>
+                                <th>Исходная валюта</th>
+                                <th>Валюта конвертации</th>
+                                <th style="text-align:right">Курс</th>
                             </tr>    
                         @for($i = 0; $i < count($exchange_rates); $i++)
                         <?php $exchange_rate = $exchange_rates[$i] ?>
