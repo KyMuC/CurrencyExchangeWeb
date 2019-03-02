@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Order;
 use App\Currency;
 use App\Office;
+use App\Employee;
 
 class OrderController extends Controller
 {
@@ -31,6 +32,28 @@ class OrderController extends Controller
 
         return redirect('/home');        
         }
+
+    public function manageOrder(Request $request)
+    {
+        if(Order::where([['office_id', Employee::where('passport_number', Auth::user()->passport_number)->first()->exchange_office_id],['id',(int)$request->all()]])->exists())
+        {
+            if($request->get('reject') != null)
+            {
+                $order = Order::where('id',$request->get('reject'))->first();
+                $order->status = 'Rejected';
+                $order->save();
+            }
+            else if($request->get('enqueue') != null)
+            {
+
+            }
+            else
+            {
+
+            }
+        }
+        return redirect('/home');
+    }
 
     public function add(Request $request) {
 
