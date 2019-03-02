@@ -35,21 +35,23 @@ class OrderController extends Controller
 
     public function manageOrder(Request $request)
     {
-        if(Order::where([['office_id', Employee::where('passport_number', Auth::user()->passport_number)->first()->exchange_office_id],['id',(int)$request->all()]])->exists())
+        //if(Order::where([['office_id', Employee::where('passport_number', Auth::user()->passport_number)->first()->exchange_office_id],['id',(int)$request->all()]])->exists())
         {
             if($request->get('reject') != null)
-            {
+            {      
                 $order = Order::where('id',$request->get('reject'))->first();
-                $order->status = 'Rejected';
+                $order->status = 'Declined';
                 $order->save();
             }
             else if($request->get('enqueue') != null)
             {
-
+                $order = Order::where('id',$request->get('reject'))->first();
+                $order->status = 'Pending';
+                $order->save();
             }
             else
             {
-
+                
             }
         }
         return redirect('/home');
