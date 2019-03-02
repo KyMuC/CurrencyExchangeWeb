@@ -52,12 +52,13 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'passport_number' => ['required', 'string', 'max:20', 'passport_exists'],
+            'passport_number' => ['required', 'string', 'max:20', 'passport_exists', 'unique:users'],
             // 'name' => ['required', 'string'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
         ],
         [
             'passport_number.passport_exists' => 'No customer or employee with such passport number!',
+            'passport_number.unique' => 'User with this passport number already exists!'
         ]);
     }
 
