@@ -45,13 +45,13 @@ class OrderController extends Controller
             }
             else if($request->get('enqueue') != null)
             {
-                $order = Order::where('id',$request->get('reject'))->first();
+                $order = Order::where('id',$request->get('enqueue'))->first();
                 $order->status = 'Pending';
                 $order->save();
             }
             else
             {
-                
+
             }
         }
         return redirect('/home');
