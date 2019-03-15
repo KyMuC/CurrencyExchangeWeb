@@ -1,0 +1,284 @@
+\documentclass{article}
+\usepackage[russian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1,T2A]{fontenc}
+%\usepackage{wrapfig}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{amsthm}
+\usepackage{blindtext}
+\usepackage[usenames, dvipsnames, table]{xcolor}
+\usepackage{multirow}
+%\usepackage{colorbl}
+\usepackage{geometry}
+\definecolor{Vyshka}{RGB}{163, 195, 247}
+\geometry{margin=1.3cm}
+
+\date{2019\\ Март}
+\author{Любаева Дарья
+\and Кудимов Михаил}
+\begin{document}
+
+\begin{titlepage}
+	\centering
+	\includegraphics[width=0.35\textwidth]{logo}\par\vspace{1cm}
+%	{\scshape\LARGE Высшая школа экономики\par}
+	\vspace{1cm}
+	{\scshape\Large База данных сети обменных пунктов \\ Веб интерфейс для доступа к БД \par}
+	\vspace{1.5cm}
+	{\Large\itshape Любаева Дарья, Кудимов Михаил\par}
+	\vfill
+	в рамках курса\par
+	\textsc{Управление данными}
+
+	\vfill
+
+	{\large \today\par}
+\end{titlepage}
+
+\section{Описание предметной области}
+
+Разработанная база данных призвана моделировать реальную ситуацию в индустрии, а именно хранение данных в сети обменных пунктов.\\
+
+Сеть обменных пунктов в рамках разработанной базы данных объединяет данные по:
+\begin{itemize}
+\item всем обменным пунктам, входящим в сеть
+\item работникам данных обменных пунктов
+\item компаниям, к которым обращается сеть для инкассации
+\item всем операциям обмена и инкассации, совершённым во всех обменных пунктах
+\item данным всех клиентов сети
+\end{itemize}
+\begin{center}
+\includegraphics[scale=0.82]{ER_model}
+\newpage
+\bgroup
+\def\arraystretch{1.06}
+\begin{tabular}{|l| m{4cm}| m{3.2cm}| m{2cm}| m{2cm}| l|}
+\hline
+\rowcolor{Vyshka}
+Table\_name &Table\_description &Column\_name &Is\_nullable &Data\_type &Row\_description\\ \hline
+ &&currency\_code &NO &nchar(3) & \noindent\\  \cline{3-6}
+&&currency\_name &NO &nvarchar(30) & \noindent\\ \cline{3-6}
+\multirow{-3}{*}{Currency} & \multirow{-2}{4cm}{Таблица существующих валют }&cash\_limit &YES &money & \noindent\\ \hline
+ 
+ 
+ &&adress	&NO	&nvarchar(100)&\\ \cline{3-6}
+  \multirow{-2}{*}{Exchange\_office} &\multirow{-2}{4cm}{Таблица существующих пунктов обмена}& office\_id &NO &int&\\ \hline
+  
+   
+ &&exchange\_office &NO&int&\\ \cline{3-6}
+  	
+&&exchange\_office&NO&int&\\ \cline{3-6}
+ 
+  \multirow{-3}{*}{Operation} & \multirow{-3}{4cm}{Таблица, объединяющая операции обмена и инкассации} & datetime	& NO & datetime&\\ \hline
+  
+  &&banknote\_id&NO	&int&\\ \cline{3-6}
+  &&currency\_code&NO&nchar(3)&\\ \cline{3-6}
+   \multirow{-3}{*}{Banknote} & \multirow{-3}{*}{Таблица купюр}&nominal\_value&NO&money&\\ \hline
+   
+   
+      
+ &&id &NO&int&\\ \cline{3-6}
+  	
+&&currency\_code&NO&nchar(3)&\\ \cline{3-6}
+ 
+  \multirow{-3}{*}{Valid\_nominal\_value} & \multirow{-3}{4cm}{Таблица валидных номиналов всех валют} & valid\_nominal\_value	& NO & money&\\ \hline
+   	
+	
+ &&source \_currency\_code&NO&nchar(3)&\\ \cline{3-6}
+ &&target \_currency\_code&NO&nchar(3)&\\ \cline{3-6}
+
+&&exchange\_rate&NO&money&\\ \cline{3-6}
+
+ \multirow{-4}{3.5cm}{Exchange\_rate\_central\\\_bank} & \multirow{-4}{3cm}{Таблица курсов валют ЦБ} & DATE& NO & date&\\ \hline
+  
+  
+
+
+&&exchange\_rate\_id&	NO&	int&\\ \cline{3-6}
+
+&&source \_currency\_code&	NO&	nchar(3)&\\ \cline{3-6}
+
+&&target \_currency\_code&	NO&	nchar(3)&\\ \cline{3-6}
+
+&&exchange\_rate&	NO&	money&\\ \cline{3-6}
+
+&&DATE&	NO	&date&\\ \cline{3-6}
+
+\multirow{-7}{*}{Exchange\_rate}&	\multirow{-6}{3cm}{Таблица курсов валют обменных пунктов}&		office\_id	&NO	&int&\\ \hline
+
+&&operation\_id&	NO&	int& \\ \cline{3-6}
+\multirow{-2}{*}{Banknotes\_outflux}	&\multirow{-2}{*}{СОООСАТЬ}&	banknote\_id	&NO&	int& \\ \hline
+
+
+&&company\_id&	NO	&int&\\ \cline{3-6}
+\multirow{-2}{3.5cm}{Cash\_in\_transit\\ \_company}&\multirow{-2}{*}{СОООСАТЬ}&company\_name&	NO&	nvarchar(30)&\\ \hline
+
+&&car\_id&	NO&	int&\\ \cline{3-6}
+&&car\_model&	NO	&nvarchar(30)&\\ \cline{3-6}
+&&car\_number&	NO&	varchar(15)&\\ \cline{3-6}
+\multirow{-4}{*}{Cash\_in\_transit\_car}	& \multirow{-4}{*}{СОООСАТЬ}&		company\_id&	NO&	int&\\ \hline
+
+
+&&operation\_id&	NO&	int&\\ \cline{3-6}
+\multirow{-2}{3.5cm}{Operation\\\_cash\_in\_transit}&\multirow{-2}{*}{СООСАТЬ}	&car\_id	&NO&	int&\\ \hline
+
+&&passport\_number&	NO&	nvarchar(20)&\\ \cline{3-6}
+&&first\_name&	NO&	nvarchar(30)&\\ \cline{3-6}
+&&last\_name&	NO&	nvarchar(30)&\\ \cline{3-6}
+&&date\_of\_birth&	NO&	datetime&\\ \cline{3-6}
+\multirow{-5}{*}{Employee} & \multirow{-5}{*}{ОООСАТЬ}&	exchange\_office\_id&	NO&	int&\\ \hline
+
+
+&&passport\_number&	NO&	nvarchar(20)&\\ \cline{3-6}
+&&first\_name&	NO&	nvarchar(30)&\\ \cline{3-6}
+&&last\_name&	NO&	nvarchar(30)&\\ \cline{3-6}
+\multirow{-4}{*}{Customer}	& \multirow{-4}{*}{СОООСАТЬ}&	date\_of\_birth&	NO&	datetime&\\ \hline
+
+
+&&operation\_id&	NO&	int&\\ \cline{3-6}
+&&exchange\_rate\_id&	NO&	int&\\ \cline{3-6}
+\multirow{-3}{*}{Operation\_exchange}&	\multirow{-3}{*}{СОООСАТЬ} &customer \_passport\_number	&NO&	nvarchar(20)&\\ \hline
+
+
+&&customer \_passport\_number&	NO	&nvarchar(20)&\\ \cline{3-6}
+&&operation\_id&	NO&	int&\\ \cline{3-6}
+\multirow{-2}{*}{Banknotes\_influx}	& \multirow{-2}{*}{СОООСАТЬ}&	ban\_note\_id&	NO&	int&\\ \hline
+
+
+%&&operation\_id&	NO&	int&\\ \cline{3-6}
+%&&issue\_date&	NO&	date&\\ \cline{3-6}
+%&&certificate\_number&	NO&	int&\\ \cline{3-6}
+%\multirow{-2}{*}{Operation\_certificate} & \multirow{-2}{*}{СОООСАТЬ}&	transaction\_amount\_base\_currency&	NO&	money&\\
+
+
+&&exchange\_office\_id&	NO&	int&\\ \cline{3-6}
+\multirow{-2}{*}{Base\_currency}	& \multirow{-2}{*}{СОООСАТЬ}& base\_currency\_code&	NO&	nchar(3)&\\
+\hline
+
+\end{tabular}
+\egroup
+\end{center}
+\medskip
+Веб интерфейс к данной модели предоставляет возможность клиентам заказать в желаемый обменный пункт необходимое количество искомой валюты, а работникам заданного обменного пункта отклонить, поставить в очередь или выполнить, заказав инкассацию, заказав инкассацию.
+\section{Скрипт создания БД}
+\begin{verbatim}
+CREATE DATABASE [CurrencyExchange]
+ 
+CREATE TABLE Currency (
+currency_code NCHAR(3) PRIMARY KEY NOT NULL,
+currency_name nvarchar(30) NOT NULL,
+cash_limit MONEY NULL
+);
+ 
+CREATE TABLE Exchange_office (
+office_id INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
+adress nvarchar(100) NOT NULL
+);
+ 
+CREATE TABLE Operation (
+operation_id INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
+exchange_office INT FOREIGN KEY REFERENCES Exchange_office(office_id) NOT NULL,
+datetime datetime NOT NULL
+);
+ 
+CREATE TABLE Banknote (
+banknote_id INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
+currency_code NCHAR(3) FOREIGN KEY REFERENCES Currency(currency_code) NOT NULL,
+nominal_value MONEY NOT NULL
+);
+
+create TABLE Valid_nominal_value (
+id int identity(1,1) primary key NOT NULL,
+currency_code nchar(3) foreign key references Currency(currency_code) NOT NULL,
+valid_nominal_value MONEY NOT NULL
+--primary key(currency_code, valid_nominal_value)
+);
+ 
+CREATE TABLE Exchange_rate_central_bank (
+source_currency_code NCHAR(3) FOREIGN KEY REFERENCES Currency(currency_code) NOT NULL,
+target_currency_code NCHAR(3) FOREIGN KEY REFERENCES Currency(currency_code) NOT NULL,
+exchange_rate money NOT NULL,
+DATE DATE NOT NULL
+ 
+PRIMARY KEY(source_currency_code,target_currency_code, DATE)
+);
+CREATE TABLE Exchange_rate (
+exchange_rate_id INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
+source_currency_code NCHAR(3) FOREIGN KEY REFERENCES Currency(currency_code) NOT NULL,
+target_currency_code NCHAR(3) FOREIGN KEY REFERENCES Currency(currency_code) NOT NULL,
+exchange_rate money NOT NULL,
+DATE DATE NOT NULL,
+office_id INT FOREIGN KEY REFERENCES Exchange_office(office_id) NOT NULL,
+CONSTRAINT FK_Exchange_rate_Exchange_rate_central_bank FOREIGN KEY (source_currency_code, target_currency_code, DATE) REFERENCES Exchange_rate_central_bank(source_currency_code, target_currency_code, DATE)
+);
+ 
+CREATE TABLE Banknotes_outflux (
+operation_id INT FOREIGN KEY REFERENCES Operation(operation_id) NOT NULL,
+banknote_id INT FOREIGN KEY REFERENCES Banknote(banknote_id)NOT NULL
+ 
+PRIMARY KEY (operation_id, banknote_id)
+);
+ 
+CREATE TABLE Cash_in_transit_company (
+company_id INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
+company_name nvarchar(30) NOT NULL
+);
+ 
+CREATE TABLE Cash_in_transit_car (
+car_id INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
+car_model nvarchar(30) NOT NULL,
+car_number VARCHAR(15) NOT NULL,
+company_id INT FOREIGN KEY REFERENCES Cash_in_transit_company(company_id) NOT NULL
+);
+ 
+CREATE TABLE Operation_cash_in_transit (
+operation_id INT PRIMARY KEY FOREIGN KEY REFERENCES Operation(operation_id) NOT NULL,
+car_id INT FOREIGN KEY REFERENCES Cash_in_transit_car(car_id) NOT NULL
+);
+ 
+CREATE TABLE Employee (
+passport_number nvarchar(20) NOT NULL,
+first_name nvarchar(30) NOT NULL,
+last_name nvarchar(30) NOT NULL,
+date_of_birth datetime NOT NULL,
+exchange_office_id INT FOREIGN KEY REFERENCES Exchange_office(office_id) NOT NULL
+);
+ 
+CREATE TABLE Customer (
+passport_number nvarchar(20) PRIMARY KEY NOT NULL,
+first_name nvarchar(30) NOT NULL,
+last_name nvarchar(30) NOT NULL,
+date_of_birth datetime NOT NULL
+);
+ 
+CREATE TABLE Operation_exchange (
+operation_id INT PRIMARY KEY FOREIGN KEY REFERENCES Operation(operation_id) NOT NULL,
+exchange_rate_id INT FOREIGN KEY REFERENCES Exchange_rate(exchange_rate_id) NOT NULL,
+customer_passport_number nvarchar(20) FOREIGN KEY REFERENCES Customer(passport_number) NOT NULL
+);
+ 
+CREATE TABLE Banknotes_influx (
+operation_id INT FOREIGN KEY REFERENCES Operation(operation_id) NOT NULL,
+banknote_id INT FOREIGN KEY REFERENCES Banknote(banknote_id) NOT NULL
+ 
+PRIMARY KEY(banknote_id,operation_id)
+);
+
+CREATE TABLE Operation_certificate (
+operation_id INT PRIMARY KEY FOREIGN KEY REFERENCES Operation(operation_id) NOT NULL,
+issue_date DATE NOT NULL,
+certificate_number INT IDENTITY(1,1) NOT NULL,
+transaction_amount_base_currency money NOT NULL
+);
+ 
+CREATE TABLE Base_currency (
+exchange_office_id INT PRIMARY KEY FOREIGN KEY REFERENCES Exchange_office(office_id) NOT NULL,
+base_currency_code NCHAR(3) FOREIGN KEY REFERENCES Currency(currency_code) NOT NULL
+);
+
+\end{verbatim}
+\section{Описание сайта}
+\end{document}
